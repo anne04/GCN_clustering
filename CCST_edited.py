@@ -13,7 +13,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.nn import GCNConv, ChebConv, GATConv, DeepGraphInfomax, TAGConv
+from torch_geometric.nn import GCNConv, ChebConv, DeepGraphInfomax, TAGConv
 from torch_geometric.data import Data, DataLoader
 
 def get_graph(adj, X):
@@ -69,24 +69,6 @@ class Encoder(nn.Module):
     def forward(self, data):
 
         x, edge_index, edge_weight = data.x, data.edge_index, data.edge_attr
-
-       	'''x = self.conv(x, edge_index)
-        x = self.conv_2(x, edge_index)
-        x = self.conv_3(x, edge_index)
-        x = self.conv_4(x, edge_index)'''
-
-        '''x = self.conv(x, edge_index, edge_type=edge_weight)
-        x = self.conv_2(x, edge_index, edge_type=edge_weight)
-        x = self.conv_3(x, edge_index, edge_type=edge_weight)
-        x = self.conv_4(x, edge_index, edge_type=edge_weight)'''
-#        x = self.conv_5(x, edge_index, edge_type=edge_weight)
-#        x = self.conv_6(x, edge_index, edge_type=edge_weight)
-
-        '''x = self.conv(x, edge_index, edge_attr=edge_weight)
-        x = self.conv_2(x, edge_index, edge_attr=edge_weight)
-        x = self.conv_3(x, edge_index, edge_attr=edge_weight)
-        x = self.conv_4(x, edge_index, edge_attr=edge_weight)'''
-
 
         #if self.GNN_type == 'TAGConv' or self.GNN_type == 'GCNConv' or self.GNN_type == 'ChebConv':
         x = self.conv(x, edge_index, edge_weight=edge_weight)
