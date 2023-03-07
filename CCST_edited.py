@@ -13,7 +13,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.nn import GCNConv, ChebConv, DeepGraphInfomax, TAGConv
+from torch_geometric.nn import GCNConv, ChebConv, DeepGraphInfomax, TAGConv, GraphConv
 from torch_geometric.data import Data, DataLoader
 
 def get_graph(adj, X):
