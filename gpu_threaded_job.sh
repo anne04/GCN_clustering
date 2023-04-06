@@ -1,4 +1,3 @@
-  GNU nano 4.6                                                                                                                                   gpu_threaded_job.sh                                                                                                                                   Modified  
 #!/bin/bash
 # ---------------------------------------------------------------------
 # SLURM script for a multi-step job on a Compute Canada cluster. 
@@ -21,10 +20,12 @@ echo ""
 # ---------------------------------------------------------------------
 # activate your virtual environment
 source /home/fatema/ENV/bin/activate
+
 # load necessary modules
 module load python/3.10
-# run your python script with parameters
-python /project/def-gregorys/fatema/GCN_clustering/run_CCST_edited.py --data_name=exp2_V10M25_61_D1_64630_Spatial10X   --num_epoch=15000 --hidden=256 --model_name=exp2_V10M25_61_D1_64630_Spatial10X_test2 --GNN_type='TAGConv'
+nvidia-smi
 
+# run your python script with parameters
+python -u run_CCST_edited.py --data_name=exp1_V10M25_60_C1_140694_Spatial10X --data_path=generated_data_pca/ --num_epoch=15000 --hidden=256 --model_name=exp1_V10M25_60_C1_140694_Spatial10X_test1 --GNN_type='GATConv' 
 # ---------------------------------------------------------------------
 echo "Job finished with exit code $? at: `date`"
