@@ -13,12 +13,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # ================Specify data type firstly===============
     # =========================== args ===============================
-    parser.add_argument( '--data_name', type=str, help='The name of dataset')
+    parser.add_argument( '--data_name', type='exp1_V10M25_60_C1_140694_Spatial10X', help='The name of dataset')
     #parser.add_argument( '--cell_label_file_name', type=str, default='kmeans_gene_exp_barcode_label.csv', help='data name?')
     parser.add_argument( '--embedding_data_path', type=str, default='embedding_data/', help='data path')
-    parser.add_argument( '--generated_data_path', type=str, default='generated_data/', help='data path')
-    parser.add_argument( '--model_name', type=str, help='input the name of the model that is used for node embedding generation')
-    parser.add_argument( '--result_path', type=str, default='result/')
+    parser.add_argument( '--generated_data_path', type=str, default='generated_data_pca/', help='data path')
+    parser.add_argument( '--model_name', type='exp1_V10M25_60_C1_140694_Spatial10X_test1', help='input the name of the model that is used for node embedding generation')
+    parser.add_argument( '--result_path', type='', default='result/')
     args = parser.parse_args()
     
     #args.data_name = 'exp2_V10M25_61_D1_64630_Spatial10X' 
@@ -31,8 +31,10 @@ if __name__ == "__main__":
 
 ##############################################
 
-    X_embedding_filename = args.embedding_data_path + args.data_name + '/' + args.model_name + '_Embed_X.npy'
-    X_embedding = np.load(X_embedding_filename)
+    X_embedding_filename = '/home/fatema/scratch/best_gmi_X_embedding_exp1_C1.npy' #args.embedding_data_path + args.data_name + '/' + args.model_name + '_Embed_X.npy'
+    X_embedding = np.load(X_embedding_filename, allow_pickle=True)
+    X_embedding = X_embedding[0]     
+    #X_embedding = np.load(X_embedding_filename)
     num_feature = X_embedding.shape[1] # row = spots, collumns = features
 
 #####################
@@ -43,7 +45,7 @@ if __name__ == "__main__":
     X_embedding = np.concatenate((feature_id, X_embedding)) # first column should have some sort of ID. I am using just unique integer IDs. 
     X_embedding_T = np.transpose(X_embedding) # To match with the too-many-cells input format
     
-    toomanycells_input_filename = args.result_path +'/'+ args.data_name +'/' + args.model_name  + '_node_embedding.csv'
+    toomanycells_input_filename = args.result_path +'/'+ args.data_name +'/' + args.model_name  + '_node_embedding_GMI.csv'
     f=open(toomanycells_input_filename, 'w', encoding='UTF8', newline='')
     writer = csv.writer(f)
     # write the header
