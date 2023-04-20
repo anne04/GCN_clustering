@@ -106,7 +106,7 @@ def main(args):
                 distance_matrix_threshold_I[i,j] = 1
                 #distance_matrix_threshold_W[i,j] = distance_matrix[i,j]
 
-        ############### get normalized sparse adjacent matrix
+    
     distance_matrix_threshold_I_N = np.float32(distance_matrix_threshold_I) ## do not normalize adjcent matrix
     distance_matrix_threshold_I_N_crs = sparse.csr_matrix(distance_matrix_threshold_I_N)
     print('dumping cell_VS_cells adjacency matrix here: '+generated_data_fold + 'Adjacent')
