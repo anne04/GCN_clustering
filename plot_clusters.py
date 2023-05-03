@@ -128,7 +128,7 @@ if __name__ == "__main__":
     chart = alt.Chart(data_list_pd).mark_point(filled=True).encode(
         alt.X('X', scale=alt.Scale(zero=False)),
         alt.Y('Y', scale=alt.Scale(zero=False)),
-        #alt.Size('pop:Q'),
+        tooltip=["cluster_label"],
         color=alt.Color('cluster_label:N', scale=alt.Scale(range=colors))
     ).configure_legend(labelFontSize=6, symbolLimit=50)
 
