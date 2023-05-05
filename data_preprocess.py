@@ -40,7 +40,7 @@ def main(args):
     gene_ids = adata_h5.var['gene_ids']
     coordinates = adata_h5.obsm['spatial']
     cell_barcode = np.array(adata_h5.obs.index)
-
+    
 
     print('===== Preprocessing Data ')
     sc.pp.filter_genes(adata_h5, min_cells=args.min_cells)
@@ -79,7 +79,7 @@ def main(args):
     #coordinates = np.load(generated_data_fold + 'coordinates.npy')
     ############# get batch adjacent matrix
     cell_num = len(coordinates)
-
+    print('Total number of spots: %d'%cell_num)
     from sklearn.metrics.pairwise import euclidean_distances
     distance_matrix = euclidean_distances(coordinates, coordinates)
 
