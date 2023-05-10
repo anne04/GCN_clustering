@@ -13,7 +13,13 @@ results_folder = 'results/lymph_nodes_analysis/'
 # create paths and names to results folders for reference regression and cell2location models
 ref_run_name = f'{results_folder}/reference_signatures'
 run_name = f'{results_folder}/cell2location_map'
-adata_vis = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
+#adata_vis = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
+
+adata_h5 = sc.read_visium(path='/cluster/projects/schwartzgroup/fatema/data/V1_Human_Lymph_Node_cell2location/V1_Human_Lymph_Node/') #st.Read10X(path='/cluster/projects/schwartzgroup/fatema/data/V1_Human_Lymph_Node_cell2location/', count_file='filtered_feature_bc_matrix.h5') #count_file=args.data_name+'_filtered_feature_bc_matrix.h5' )
+print(adata_h5)
+adata_vis = adata_h5
+
+
 adata_vis.obs['sample'] = list(adata_vis.uns['spatial'].keys())[0]
 adata_vis.var['SYMBOL'] = adata_vis.var_names
 adata_vis.var.set_index('gene_ids', drop=True, inplace=True)
@@ -22,11 +28,14 @@ adata_vis.var['MT_gene'] = [gene.startswith('MT-') for gene in adata_vis.var['SY
 # remove MT genes for spatial mapping (keeping their counts in the object)
 adata_vis.obsm['MT'] = adata_vis[:, adata_vis.var['MT_gene'].values].X.toarray()
 adata_vis = adata_vis[:, ~adata_vis.var['MT_gene'].values]
+
+'''
 adata_ref = sc.read(
     f'./data/sc.h5ad',
     backup_url='https://cell2location.cog.sanger.ac.uk/paper/integrated_lymphoid_organ_scrna/RegressionNBV4Torch_57covariates_73260cells_10237genes/sc.h5ad'
 )
-
+'''
+adata_ref = sc.read('/cluster/projects/schwartzgroup/fatema/data/V1_Human_Lymph_Node_cell2location/sc.h5ad')
 adata_ref.var['SYMBOL'] = adata_ref.var.index
 # rename 'GeneID-2' as necessary for your data
 adata_ref.var.set_index('GeneID-2', drop=True, inplace=True)
@@ -51,3 +60,6 @@ mod = RegressionModel(adata_ref)
 
 # view anndata_setup as a sanity check
 mod.view_anndata_setup()
+mod.train(max_epochs=250, use_gpu=True)
+
+
