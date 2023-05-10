@@ -1,4 +1,3 @@
-
 # edited from: https://github.com/zpeng27/GMI/blob/master/execute.py
 import os
 import torch
@@ -19,9 +18,9 @@ parser.add_argument('--gpu', type=int, default=0,
 """training params"""
 parser.add_argument('--hid_units', type=int, default=512,
                     help='dim of node embedding (default: 512)')
-parser.add_argument('--nb_epochs', type=int, default=550,
+parser.add_argument('--nb_epochs', type=int, default=100000,
                     help='number of epochs to train (default: 550)')
-parser.add_argument('--epoch_flag', type=int, default=20,
+parser.add_argument('--epoch_flag', type=int, default=30,
                     help=' early stopping (default: 20)')
 parser.add_argument('--lr', type=float, default=0.001,
                     help='learning rate (default: 0.001)')
@@ -47,6 +46,7 @@ parser.add_argument('--lambda_I', default=0.8,
 ###############################################
 
 args = parser.parse_args()
+args.meu = 1 - args.lambda_I
 torch.cuda.set_device(args.gpu)
 #data_file = 'exp1_V10M25_60_C1_140694_Spatial10X/' #'/project/def-gregorys/fatema/GCN_clustering/generated_data_pca/exp1_V10M25_60_C1_140694_Spatial10X/'
 data_file = '/project/def-gregorys/fatema/GCN_clustering/generated_data_pca/exp1_V10M25_60_C1_140694_Spatial10X/'
