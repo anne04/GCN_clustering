@@ -153,4 +153,61 @@ adata_file = f"{run_name}/sp.h5ad"
 adata_vis = sc.read_h5ad(adata_file)
 mod = cell2location.models.Cell2location.load(f"{run_name}", adata_vis)
 '''
+from cell2location.utils import select_slide
+slide = select_slide(adata_vis, 'V1_Human_Lymph_Node')
+adata_vis.obs[adata_vis.uns['mod']['factor_names']] = adata_vis.obsm['q05_cell_abundance_w_sf']
+
+# select up to 6 clusters
+clust_labels = ['T_CD4+_naive', 'B_naive', 'FDC']
+clust_col = ['' + str(i) for i in clust_labels] # in case column names differ from labels
+
+slide = select_slide(adata_vis, 'V1_Human_Lymph_Node')
+from collections import defaultdict
+spot_vs_type = defaultdict(list)
+spot_vs_type['barcode']=[]
+spot_vs_type['T_CD8+_naive']=[]
+spot_vs_type['B_naive']=[]
+spot_vs_type['FDC']=[]
+for i in range (0, len(slide)):
+    spot_vs_type['barcode'].append(slide.obs['T_CD8+_naive'].index[i])
+ ,  spot_vs_type['T_CD8+_naive'].append(slide.obs['T_CD8+_naive'][i])
+    spot_vs_type['B_naive'].append(slide.obs['B_naive'][i])
+    spot_vs_type['FDC'].append(slide.obs['FDC'][i])
+
+import pandas as pd
+spot_vs_type_dataframe = pd.DataFrame(spot_vs_type)
+spot_vs_type_dataframe.to_csv('/cluster/home/t116508uhn/64630/spot_vs_type_dataframe_V1_HumanLympNode.csv', index=False)
+
+'''
+>>> spot_vs_type_dataframe
+                 barcode  T_CD8+_naive    B_naive       FDC
+0     AAACAAGTATCTCCCA-1      1.102267   5.888736  0.178185
+1     AAACAATCTACTAGCA-1      4.777420   0.103569  0.384692
+2     AAACACCAATAACTGC-1      0.717926   3.651664  0.162864
+3     AAACAGAGCGACTCCT-1      0.384908   0.002634  0.895615
+4     AAACAGCTTTCAGAAG-1      0.191829  19.128501  1.077212
+...                  ...           ...        ...       ...
+4030  TTGTTTCACATCCAGG-1      0.589134   5.925571  0.318266
+4031  TTGTTTCATTAGTCTA-1      0.299134   3.412221  0.780267
+4032  TTGTTTCCATACAACT-1      0.954557   6.124115  0.371099
+4033  TTGTTTGTATTACACG-1      2.486489   0.813700  0.095774
+4034  TTGTTTGTGTAAATTC-1      5.706200   2.034936  0.515592
+
+[4035 rows x 4 columns]
+'''
+
+fig = plot_spatial(
+    adata=slide,
+    # labels to show on a plot
+    color=clust_col, labels=clust_labels,
+    show_img=True,
+    # 'fast' (white background) or 'dark_background'
+    style='fast',
+    # limit color scale at 99.2% quantile of cell abundance
+    max_color_quantile=0.992,
+    # size of locations (adjust depending on figure size)
+    circle_diameter=6,
+    colorbar_position='right'
+)
+
 
