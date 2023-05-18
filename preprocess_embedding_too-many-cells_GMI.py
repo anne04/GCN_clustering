@@ -1,4 +1,4 @@
-  GNU nano 4.6                                                                      preprocess_embedding_too-many-cells.py                                                                                 
+                                                                              
 import numpy as np
 import csv
 import pickle
