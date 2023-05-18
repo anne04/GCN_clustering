@@ -23,3 +23,24 @@ X_embedding_filename = '/cluster/projects/schwartzgroup/fatema/data/GraphST_embe
 X_embedding = adata.obsm['emb'] 
 np.save(X_embedding_filename, X_embedding)
 
+file_list = ['/cluster/projects/schwartzgroup/deisha/data/spaceranger/10x_dlpfc/outs',
+             
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp2/exp2_A1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp2/exp2_B1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp2/exp2_C1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp2/exp2_D1/outs',
+             
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp3/exp3_A1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp3/exp3_B1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp3/exp3_C1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp3/exp3_D1/outs',
+             
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp4/exp4_A1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp4/exp4_B1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp4/exp4_C1/outs',
+             '/cluster/projects/schwartzgroup/deisha/data/spaceranger/exp4/exp4_D1/outs']
+
+X_embedding_filename = ['10x_dlpfc', 
+                        'exp2_A1', 'exp2_B1', 'exp2_C1', 'exp2_D1', 
+                        'exp3_A1', 'exp3_B1', 'exp3_C1', 'exp3_D1', 
+                       'exp4_A1', 'exp4_B1', 'exp4_C1', 'exp4_D1']
