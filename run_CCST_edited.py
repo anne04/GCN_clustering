@@ -42,10 +42,8 @@ if __name__ == "__main__":
     parser.add_argument( '--model_name', type=str, default='r1')
     parser.add_argument( '--training_data', type=str, default='provide please')
     parser.add_argument( '--GNN_type', type=str, default='GCNConv')
-
-
     args = parser.parse_args()
-
+    args.meu = 1 - args.lambda_I 
     args.embedding_data_path = args.embedding_data_path +'/'+ args.data_name +'/'
     args.model_path = args.model_path +'/'+ args.data_name +'/'
     #args.result_path = args.result_path +'/'+ args.data_name +'/'
